@@ -24,18 +24,18 @@ def preparer_evenements(match_json, evenements):
         'pass_epv_delta_for', 'pass_epv_total', 'pass_reception_epv_for',
         'possession_epv_for_end', 'possession_epv_delta_for'
     ]
+    #une premère version donnait une erreur, cette section a été écrite à l'aide d'un LLM
     for colonne in colonnes_numeriques:
         if colonne in df.columns:
-            df[colonne] = df[colonne].astype(float)
+            df[colonne] = pd.to_numeric(df[colonne], errors='coerce')
         else:
             df[colonne] = float('nan')
 
     for colonne in ['lead_to_shot', 'lead_to_goal']:
         if colonne in df.columns:
-            if df[colonne].isna().sum() == 0:                 
-                df[colonne] = df[colonne].astype(int)
-            else:
-                df[colonne] = df[colonne].astype(float)
+            df[colonne] = df[colonne].astype(str).str.lower().map({
+                'true': 1, 'false': 0, '1': 1, '0': 0
+            })
         else:
             df[colonne] = float('nan')
 
