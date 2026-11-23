@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 
 
 def compter_actions_joueurs(actions_zone14):
-    """Compte les cinq catégories d'actions par player_id sur les quatre matchs."""
     tableau_usage = None
 
     for nom_action, resultats in actions_zone14.items():
@@ -124,7 +123,7 @@ def tableau_identite(top_joueurs, pas, courses, phys):
             else:
                 ligne['Âge (ans)'] = float('nan')
 
-            ligne['Matchs retenus (60 min ou plus)'] = int(principale[colonne_matchs])
+            ligne['Nombre de matchs'] = int(principale[colonne_matchs])
             ligne['Minutes par match'] = round(principale[colonne_minutes], 1)
 
         ligne['Actions en zone 14 (4 matchs)'] = int(joueur['total'])
