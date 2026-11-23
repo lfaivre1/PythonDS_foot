@@ -26,7 +26,7 @@ def preparer_evenements(match_json, evenements):
     ]
     for colonne in colonnes_numeriques:
         if colonne in df.columns:
-            df[colonne] = df[colonne].astype(float)            
+            df[colonne] = df[colonne].astype(float)
         else:
             df[colonne] = float('nan')
 
