@@ -27,9 +27,11 @@ def liste_matchs():
 
 
 def nettoyer_classement(tableau):
+    #sur Wikipédia, l'en-tête de la colonne Team contient aussi les liens « v t e » du modèle
+    tableau = tableau.rename(columns=lambda c: 'Team' if str(c).startswith('Team') else c)
     classement = tableau[['Pos', 'Team', 'Pld', 'W', 'D', 'L', 'GF', 'GA', 'GD', 'Pts']].copy()
-    #mêmes noms que dans SkillCorner : on enlève (C) et FC, seul Newcastle s'écrit différemment
-    classement['equipe'] = (classement['Team'].str.replace(r'\s*\([A-Z]\)', '', regex=True)
+    #mêmes noms que dans SkillCorner : on enlève (C), les renvois de notes [a] et FC, seul Newcastle s'écrit différemment
+    classement['equipe'] = (classement['Team'].str.replace(r'\s*\([A-Z]\)|\[.*?\]', '', regex=True)
                             .str.replace(' FC', '').str.strip()
                             .replace({'Newcastle Jets': 'Newcastle United Jets'}))
     #Wikipédia écrit les différences de buts négatives avec le signe « − »
