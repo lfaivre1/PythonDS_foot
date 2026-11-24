@@ -49,3 +49,17 @@ pip install pandas matplotlib s3fs pyarrow
 - Fichier `synthèse.ipynb` : Notebook qui contient le rapport principal du projet avec l'analyse des différentes sorties.
 
 
+
+
+## Compléments : classement final et comparaison avec les autres équipes
+
+Deux compléments sont présentés dans la section 8 de la synthèse :
+
+- le classement final de la saison régulière, récupéré sur [Wikipédia](https://en.wikipedia.org/wiki/2024%E2%80%9325_A-League_Men) par *scraping* et relié au style de jeu des équipes (section 8 du notebook `01_exploration_donnees`) ; une copie du tableau (`data/classement_wikipedia_2024_25.csv`) est utilisée si la page est inaccessible ;
+- la comparaison d'Auckland FC avec les autres équipes sur les vingt matchs de l'open data SkillCorner (notebook `05_comparaison_ligue`), lus directement sur le dépôt GitHub de SkillCorner.
+
+Les fonctions correspondantes sont dans `src/donnees.py` et `src/fonctions_comparaison.py`. Ces compléments utilisent en plus `requests` et `lxml` ; toutes les bibliothèques du projet sont listées dans `requirements.txt` :
+
+```bash
+pip install -r requirements.txt
+```
