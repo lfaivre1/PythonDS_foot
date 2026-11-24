@@ -1,5 +1,4 @@
 from io import StringIO
-from pathlib import Path
 
 import pandas as pd
 import requests
@@ -9,8 +8,6 @@ COMMIT = '4340d274572876239c154c90bc507a9b3250a656'
 BASE = f'https://raw.githubusercontent.com/SkillCorner/opendata/{COMMIT}/data'
 
 URL_WIKIPEDIA = 'https://en.wikipedia.org/wiki/2024%E2%80%9325_A-League_Men'
-#copie du tableau Wikipédia, utilisée si la page n'est pas accessible
-FICHIER_SECOURS = Path(__file__).resolve().parent.parent / 'data' / 'classement_wikipedia_2024_25.csv'
 
 
 def charger_match(id_match):
@@ -47,13 +44,9 @@ def nettoyer_classement(tableau):
 
 
 def charger_classement():
-    try:
-        page = requests.get(URL_WIKIPEDIA, headers={'User-Agent': 'projet ENSAE'}, timeout=30)
-        page.raise_for_status()
-        #le classement est le premier tableau de la page avec une colonne 'Pld'
-        classement = nettoyer_classement(pd.read_html(StringIO(page.text), match='Pld')[0])
-        print('Classement récupéré sur Wikipédia')
-    except Exception as erreur:
-        print('Wikipédia inaccessible (' + type(erreur).__name__ + '), on utilise la copie du tableau')
-        classement = nettoyer_classement(pd.read_csv(FICHIER_SECOURS))
+    #le classement est le premier tableau de la page avec une colonne 'Pld'
+    page = requests.get(URL_WIKIPEDIA, headers={'User-Agent': 'projet ENSAE'}, timeout=30)
+    page.raise_for_status()
+    classement = nettoyer_classement(pd.read_html(StringIO(page.text), match='Pld')[0])
+    print('Classement récupéré sur Wikipédia')
     return classement
